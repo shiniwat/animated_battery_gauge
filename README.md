@@ -1,9 +1,17 @@
+# animated_battery_gauge widget
 
-Very simple to use animated battery gauge widget
+Very simple to use animated battery gauge widget.
+Here're acreenshots:
+![horizontal demo](https://github.com/shiniwat/animated_batery_gauge/demo/animated_battery_horizontal.gif)
+![vertical_demo](https://github.com/shiniwat/animated_batery_gauge/demo/animated_battery_vertical.gif)
 
 ## Features
 
 Both horizontal and vertical animated widgets are supported.
+
+## Getting started
+
+Please see example app under example folder.
 
 ## Usage
 
@@ -28,7 +36,3 @@ Widget build(BuildContext context) {
   );
 }
 ```
-
-## Output
-
-Some images will be put later.
