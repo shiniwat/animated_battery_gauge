@@ -3,8 +3,8 @@
 Very simple to use animated battery gauge widget.
 
 ## Screenshots:
-![](https://github.com/shiniwat/animated_batery_gauge/demo/animated_battery_horizontal.gif)
-![](https://github.com/shiniwat/animated_batery_gauge/demo/animated_battery_vertical.gif)
+![](https://github.com/shiniwat/animated_battery_gauge/blob/main/demo/animated_battery_horizontal.gif)
+![](https://github.com/shiniwat/animated_battery_gauge/blob/main/demo/animated_battery_vertical.gif)
 
 ## Features
 
