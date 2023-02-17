@@ -31,6 +31,7 @@ Widget build(BuildContext context) {
         size: Size(150, 70),
         borderColor: CupertinoColors.systemGrey,
         valueColor: CupertinoColors.activeGreen,
+        hasGauge: true,
         hasText: true,
       ),
     ),
