@@ -8,7 +8,7 @@ class BatteryGauge extends StatefulWidget {
   final Color borderColor;
   final Color valueColor;
   final bool hasGauge;
-  final hasText;
+  final bool hasText;
   final TextStyle? textStyle;
   const BatteryGauge(
       {Key? key,
@@ -35,7 +35,7 @@ class _BatteryGaugeState extends State<BatteryGauge> {
   Widget build(BuildContext context) {
     final margin = widget.size.width * 0.04 * 2;
     final isHorizontal = widget.size.width >= widget.size.height;
-    return Container(
+    return SizedBox(
       width: (isHorizontal) ? widget.size.width + margin : widget.size.width,
       height: (isHorizontal) ? widget.size.height : widget.size.height + margin,
       child: Stack(

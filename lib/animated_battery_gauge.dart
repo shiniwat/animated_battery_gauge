@@ -30,7 +30,6 @@ class AnimatedBatteryGauge extends ImplicitlyAnimatedWidget {
 
 class _AnimatedBatteryGaugeState
     extends AnimatedWidgetBaseState<AnimatedBatteryGauge> {
-  bool _isInitialAnimation = true;
   Tween<double>? _valueTween;
 
   @override
@@ -39,7 +38,7 @@ class _AnimatedBatteryGaugeState
     controller
       ..value = 0.0
       ..forward().whenCompleteOrCancel(() {
-        _isInitialAnimation = false;
+        // do nothing so far.
       });
   }
 

@@ -1,7 +1,7 @@
 name: animated_battery_gauge
 description: A simple and customizable animated battery gauge widget.
 version: 0.1.0
-homepage:
+repository: https://github.com/shiniwat/animated_battery_gauge
 
 environment:
   sdk: '>=2.19.2 <3.0.0'

@@ -10,8 +10,7 @@ void main() {
       valueColor: CupertinoColors.activeBlue,
       hasGauge: true,
       hasText: true);
-  final testWidget =
-      CupertinoApp(home: Container(child: Center(child: batteryGauge)));
+  const testWidget = CupertinoApp(home: Center(child: batteryGauge));
   testWidgets('AnimatedBatteryGauge test ', (widgetTester) async {
     await widgetTester.pumpWidget(testWidget);
     final valueFinder = find.text('50%');
