@@ -42,7 +42,7 @@ class _BatteryGaugeState extends State<BatteryGauge> {
         children: [
           CustomPaint(
             size: widget.size,
-            painter: BatteruGaugePainter(
+            painter: _BatteryGaugePainter(
                 value: widget.value,
                 borderColor: widget.borderColor,
                 valueColor: widget.valueColor,
@@ -62,13 +62,13 @@ class _BatteryGaugeState extends State<BatteryGauge> {
   }
 }
 
-class BatteruGaugePainter extends CustomPainter {
+class _BatteryGaugePainter extends CustomPainter {
   final int value;
   final Color borderColor;
   final Color valueColor;
   final bool hasGauge;
 
-  const BatteruGaugePainter(
+  const _BatteryGaugePainter(
       {required this.value,
       required this.borderColor,
       required this.valueColor,
