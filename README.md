@@ -2,13 +2,19 @@
 
 Very simple to use animated battery gauge widget.
 
-## Screenshots:
+## Screenshots
+- Horizontal gauge mode
 ![](https://github.com/shiniwat/animated_battery_gauge/blob/main/demo/animated_battery_horizontal.gif)
+- Vertical gauge mode
 ![](https://github.com/shiniwat/animated_battery_gauge/blob/main/demo/animated_battery_vertical.gif)
+- Horizontal grid mode
+![](https://github.com/shiniwat/animated_battery_gauge/blob/main/demo/animated_grid_mode_horizontal.gif)
 
 ## Features
 
-Both horizontal and vertical animated widgets are supported.
+- Both animated and static widgets exist. AnimatedBatteryGauge is animated version, and BatteryGauge is non-animated version.
+- Both horizontal and vertical widgets are supported. See screenshot above.
+- Starting from version 0.2.0, the widget takes mode parameter, which takes BatteryGaugePaintMode. You can take either gauge, grid, or none as the mode parameter.
 
 ## Getting started
 
@@ -31,7 +37,7 @@ Widget build(BuildContext context) {
         size: Size(150, 70),
         borderColor: CupertinoColors.systemGrey,
         valueColor: CupertinoColors.activeGreen,
-        hasGauge: true,
+        mode: BatteryGaugePaintMode.gauge,
         hasText: true,
       ),
     ),

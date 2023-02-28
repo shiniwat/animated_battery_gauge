@@ -8,7 +8,6 @@ void main() {
       value: 50,
       borderColor: CupertinoColors.systemGrey,
       valueColor: CupertinoColors.activeBlue,
-      hasGauge: true,
       hasText: true);
   const testWidget = CupertinoApp(home: Center(child: batteryGauge));
   testWidgets('AnimatedBatteryGauge test ', (widgetTester) async {

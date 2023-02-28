@@ -8,9 +8,10 @@ class AnimatedBatteryGauge extends ImplicitlyAnimatedWidget {
   final Size size;
   final Color borderColor;
   final Color valueColor;
-  final bool hasGauge;
+  final BatteryGaugePaintMode mode;
   final bool hasText;
   final TextStyle? textStyle;
+  final bool drawBarForExtraValue;
 
   const AnimatedBatteryGauge(
       {Key? key,
@@ -19,9 +20,10 @@ class AnimatedBatteryGauge extends ImplicitlyAnimatedWidget {
       required this.size,
       required this.borderColor,
       required this.valueColor,
-      this.hasGauge = true,
+      this.mode = BatteryGaugePaintMode.gauge,
       this.hasText = false,
-      this.textStyle})
+      this.textStyle,
+      this.drawBarForExtraValue = false})
       : super(key: key);
 
   @override
@@ -55,9 +57,10 @@ class _AnimatedBatteryGaugeState
           value: drawValue.toInt(),
           borderColor: widget.borderColor,
           valueColor: widget.valueColor,
-          hasGauge: widget.hasGauge,
+          mode: widget.mode,
           hasText: widget.hasText,
           textStyle: widget.textStyle,
+          drawBarForExtraValue: widget.drawBarForExtraValue,
         );
       }),
     );

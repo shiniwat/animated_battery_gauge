@@ -49,21 +49,48 @@ class StartWidget extends StatelessWidget {
                       .push(CupertinoPageRoute(builder: (context) {
                     return BatteryGaugeDemo(
                       isHorizontal: true,
+                      isGrid: false,
                     );
                   }));
                 },
-                child: Text('Show Battery Horizontal'),
+                child: Text('Show Battery Horizontal w/ gauge'),
               ),
               CupertinoButton(
-                  child: Text('Show Battery Vertical'),
-                  onPressed: () {
-                    Navigator.of(context)
-                        .push(CupertinoPageRoute(builder: (context) {
-                      return BatteryGaugeDemo(
-                        isHorizontal: false,
-                      );
-                    }));
-                  }),
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(CupertinoPageRoute(builder: (context) {
+                    return BatteryGaugeDemo(
+                      isHorizontal: false,
+                      isGrid: false,
+                    );
+                  }));
+                },
+                child: Text('Show Battery Vertical w/ gauge'),
+              ),
+              CupertinoButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(CupertinoPageRoute(builder: (context) {
+                    return BatteryGaugeDemo(
+                      isHorizontal: true,
+                      isGrid: true,
+                    );
+                  }));
+                },
+                child: Text('Show Battery Horizontal w/ grid mode'),
+              ),
+              CupertinoButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(CupertinoPageRoute(builder: (context) {
+                    return BatteryGaugeDemo(
+                      isHorizontal: false,
+                      isGrid: true,
+                    );
+                  }));
+                },
+                child: Text('Show Battery Vertical w/ grid mode'),
+              ),
             ]),
       ),
     );

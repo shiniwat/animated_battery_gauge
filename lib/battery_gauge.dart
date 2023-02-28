@@ -2,23 +2,31 @@ library animated_battery_gauge;
 
 import 'package:flutter/cupertino.dart';
 
+enum BatteryGaugePaintMode {
+  gauge,
+  grid,
+  none,
+}
+
 class BatteryGauge extends StatefulWidget {
   final Size size;
   final int value;
   final Color borderColor;
   final Color valueColor;
-  final bool hasGauge;
+  final BatteryGaugePaintMode mode;
   final bool hasText;
   final TextStyle? textStyle;
+  final bool drawBarForExtraValue;
   const BatteryGauge(
       {Key? key,
       required this.size,
       required this.value,
       required this.borderColor,
       required this.valueColor,
-      this.hasGauge = true,
+      this.mode = BatteryGaugePaintMode.gauge,
       this.hasText = false,
-      this.textStyle})
+      this.textStyle,
+      this.drawBarForExtraValue = false})
       : super(key: key);
 
   @override
@@ -46,7 +54,8 @@ class _BatteryGaugeState extends State<BatteryGauge> {
                 value: widget.value,
                 borderColor: widget.borderColor,
                 valueColor: widget.valueColor,
-                hasGauge: widget.hasGauge),
+                mode: widget.mode,
+                drawBarForExtraValue: widget.drawBarForExtraValue),
           ),
           if (widget.hasText)
             Positioned(
@@ -66,13 +75,15 @@ class _BatteryGaugePainter extends CustomPainter {
   final int value;
   final Color borderColor;
   final Color valueColor;
-  final bool hasGauge;
+  final BatteryGaugePaintMode mode;
+  final bool drawBarForExtraValue;
 
   const _BatteryGaugePainter(
       {required this.value,
       required this.borderColor,
       required this.valueColor,
-      required this.hasGauge})
+      required this.mode,
+      required this.drawBarForExtraValue})
       : super();
 
   @override
@@ -90,15 +101,9 @@ class _BatteryGaugePainter extends CustomPainter {
       ..shader
       ..style = PaintingStyle.fill;
 
+    final margin = stroke * 2;
+    // render battery rect and connector
     if (isHorizontal) {
-      // render value
-      canvas.drawRRect(
-        RRect.fromRectAndRadius(
-            Rect.fromLTWH(0, 0, size.width * value / 100, size.height),
-            Radius.circular(size.width * 0.05)),
-        paintValue,
-      );
-
       // render battery rect
       canvas.drawRRect(
         RRect.fromRectAndRadius(Rect.fromLTWH(0, 0, size.width, size.height),
@@ -116,16 +121,6 @@ class _BatteryGaugePainter extends CustomPainter {
       );
     } else {
       // vertical
-      // render value
-      final margin = stroke * 2;
-      canvas.drawRRect(
-        RRect.fromRectAndRadius(
-            Rect.fromLTWH(0, margin + size.height - size.height * value / 100,
-                size.width, size.height * value / 100),
-            Radius.circular(size.width * 0.05)),
-        paintValue,
-      );
-
       // render battery rect
       canvas.drawRRect(
         RRect.fromRectAndRadius(
@@ -144,7 +139,51 @@ class _BatteryGaugePainter extends CustomPainter {
       );
     }
 
-    if (hasGauge) {
+    // render value
+    switch (mode) {
+      case BatteryGaugePaintMode.none:
+      case BatteryGaugePaintMode.gauge:
+        if (isHorizontal) {
+          // render value
+          canvas.drawRRect(
+            RRect.fromRectAndRadius(
+                Rect.fromLTWH(0, 0, size.width * value / 100, size.height),
+                Radius.circular(size.width * 0.05)),
+            paintValue,
+          );
+        } else {
+          // render value
+          final margin = stroke * 2;
+          canvas.drawRRect(
+            RRect.fromRectAndRadius(
+                Rect.fromLTWH(
+                    0,
+                    margin + size.height - size.height * value / 100,
+                    size.width,
+                    size.height * value / 100),
+                Radius.circular(size.width * 0.05)),
+            paintValue,
+          );
+        }
+        break;
+
+      case BatteryGaugePaintMode.grid:
+        var paintInactive = Paint()
+          ..color = CupertinoColors.systemGrey5
+          ..shader
+          ..style = PaintingStyle.fill;
+        var numBar = value ~/ 10;
+        if (drawBarForExtraValue && value.toInt() % 10 > 0) {
+          numBar++;
+        }
+        final list = _getRectList(size, value, stroke);
+        for (int i = 0; i < list.length; i++) {
+          canvas.drawRect(list[i], (i < numBar) ? paintValue : paintInactive);
+        }
+        break;
+    }
+
+    if (mode == BatteryGaugePaintMode.gauge) {
       // draw gauge
       var paintGauge = Paint()
         ..color = CupertinoColors.systemGrey2
@@ -172,5 +211,33 @@ class _BatteryGaugePainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return true;
+  }
+
+  List<Rect> _getRectList(Size size, int value, double stroke) {
+    var list = <Rect>[];
+    const margin = 2.0;
+    if (size.width >= size.height) {
+      final barWidth = (size.width - margin * 11 - stroke * 2) / 10;
+      for (int i = 0; i < 10; i++) {
+        final offset = stroke + (i + 1) * margin + i * barWidth;
+        final rect = Rect.fromLTRB(offset, stroke + margin, offset + barWidth,
+            size.height - stroke - margin);
+        list.add(rect);
+      }
+    } else {
+      final connectorHeight = stroke * 2;
+      final barHeight = (size.height - margin * 11 - stroke * 2) / 10;
+      for (int i = 0; i < 10; i++) {
+        final bottomOffset = size.height -
+            connectorHeight -
+            stroke -
+            (i + 1) * margin -
+            (i - 1) * barHeight;
+        final rect = Rect.fromLTRB(stroke + margin, bottomOffset - barHeight,
+            size.width - stroke - margin, bottomOffset);
+        list.add(rect);
+      }
+    }
+    return list;
   }
 }
